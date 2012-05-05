@@ -9,6 +9,6 @@ LOGFILE=$HOME/backup.log
 
 echo "Nightly Backup Started: $(date)" >> $LOGFILE
 
-u1sync --oauth=$U1AUTH --action=upload $U1DIR
+/usr/local/bin/u1sync --oauth=$U1AUTH --action=upload $U1DIR
 
 echo "Nightly Backup Successful: $(date)" >> $LOGFILE
