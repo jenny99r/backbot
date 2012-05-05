@@ -19,16 +19,16 @@ sudo python u1sync/setup.py install
 
 Then you'll need an oauth token...
 ```bash
-    wget --user=me@mine.com -O token-details --ask-password "https://login.ubuntu.com/api/1.0/authentications?ws.op=authenticate&token_name=Ubuntu%20One%20@%20$(hostname)"
-    wget -O token-approval "https://one.ubuntu.com/oauth/sso-finished-so-get-tokens/me%40mine.com"
+wget --user=me@mine.com -O token-details --ask-password "https://login.ubuntu.com/api/1.0/authentications?ws.op=authenticate&token_name=Ubuntu%20One%20@%20$(hostname)"
+wget -O token-approval "https://one.ubuntu.com/oauth/sso-finished-so-get-tokens/me%40mine.com"
 ```
 
 or use this script: http://people.canonical.com/~roman.yepishev/us/ubuntuone-sso-login.py
 
 references:
-https://bugs.launchpad.net/u1sync/+bug/910207
-http://per.liedman.net/2011/01/22/using-ubuntu-one-for-backup-on-a-headless-server/
-http://per.liedman.net/2011/12/28/using-ubuntu-one-from-a-headless-oneiric-ocelot/
+ * https://bugs.launchpad.net/u1sync/+bug/910207
+ * http://per.liedman.net/2011/01/22/using-ubuntu-one-for-backup-on-a-headless-server/
+ * http://per.liedman.net/2011/12/28/using-ubuntu-one-from-a-headless-oneiric-ocelot/
 
 __u1sync usage__
 ```bash
@@ -53,7 +53,6 @@ mount -t smbfs /host//share /home/user/mount -o username=user,password=pass
 unmount /home/user/mount
 
 sudo apt-get install smbnetfs
-
-
+```
 references:
-https://help.ubuntu.com/community/MountWindowsSharesPermanently
+ * https://help.ubuntu.com/community/MountWindowsSharesPermanently
