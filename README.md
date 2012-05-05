@@ -43,3 +43,17 @@ crontab -e
 01 04 * * * /home/tom/backbot/backup.sh
 ```
 
+__mounting windows share__
+```bash
+sudo apt-get install smbfs
+sudo update-rc.d -f umountnfs.sh remove
+sudo update-rc.d umountnfs.sh stop 15 0 6 .
+
+mount -t smbfs /host//share /home/user/mount -o username=user,password=pass
+unmount /home/user/mount
+
+sudo apt-get install smbnetfs
+
+
+references:
+https://help.ubuntu.com/community/MountWindowsSharesPermanently
