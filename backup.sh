@@ -18,12 +18,19 @@ LOGFILE="$HOME"/mybackup.log
 /bin/mkdir -p "$HOME"/samba
 /usr/bin/smbnetfs "$HOME"/samba
 
-ls "$HOME"/samba/phlox.lan/tom
+/bin/mkdir -p "$HOME"/local
+/usr/bin/rsync -za --delete "$HOME"/samba/phlox.lan/tom/ "$HOME"/local/
 
 # unmount samba shares
 /bin/fusermount -u "$HOME"/samba
 /bin/rm -fr "$HOME"/samba
 
-/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=upload "$U1DIR"
+#sync the remote backup directory and push it
+if /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync --dry-run "$HOME"/local/ "$U1DIR"/ | /bin/grep -q '^deleting .*backup.keyfile$'; then
+ /bin/echo "Fatal Error -- deleting keyfile"
+ exit 1
+fi
+/usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/
+/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR"
 
 /bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
