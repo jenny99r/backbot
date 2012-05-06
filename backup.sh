@@ -1,14 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 set -u
 set -e
 
-U1DIR=$HOME/u1
-U1OAUTH=`cat $HOME/u1oauth.key`
-LOGFILE=$HOME/backup.log
+WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
+U1DIR="$HOME"/u1
+U1OAUTH=`/bin/cat "$HOME"/u1oauth.key`
+LOGFILE="$HOME"/backup.log
 
+/bin/echo $WRKDIR
+/bin/echo "Nightly Backup Started: $(date)" >> $LOGFILE
 
-echo "Nightly Backup Started: $(date)" >> $LOGFILE
+/bin/cp -R "$WRKDIR"/smb "$HOME"/.smb 
+/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=upload "$U1DIR"
 
-/usr/local/bin/u1sync --oauth=$U1OAUTH --action=upload $U1DIR
-
-echo "Nightly Backup Successful: $(date)" >> $LOGFILE
+/bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
