@@ -5,7 +5,7 @@ set -e
 WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 U1DIR="$HOME"/u1
 U1OAUTH=`/bin/cat "$HOME"/u1oauth.key`
-LOGFILE="$HOME"/mybackup.log
+LOGFILE="$HOME"/log/$(date -u +%Y%m%d%H%M%S).log
 
 /bin/echo "Nightly Backup Started: $(date)" >> $LOGFILE
 
