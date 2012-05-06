@@ -48,11 +48,18 @@ __mounting windows share__
 sudo apt-get install smbfs
 sudo update-rc.d -f umountnfs.sh remove
 sudo update-rc.d umountnfs.sh stop 15 0 6 .
-
-mount -t smbfs /host//share /home/user/mount -o username=user,password=pass
-unmount /home/user/mount
-
 sudo apt-get install smbnetfs
+
+cp /etc/samba/smb.conf ~/.smb/.
+cp /etc/smbnetfs.conf ~/.smb/.
+echo "auth host/share username password" > ~/.smb/smbnetfs.auth
+chmod 600 ~/.smb/*
+
+mkdir ~/samba-shares
+smbnetfs ~/samba-shares
+ls ~/samba-shares/host/share
+fusermount -u ~/samba-shares
 ```
 references:
  * https://help.ubuntu.com/community/MountWindowsSharesPermanently
+ * http://manpages.ubuntu.com/manpages/hardy/man1/smbnetfs.1.html
