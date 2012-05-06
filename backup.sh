@@ -18,8 +18,8 @@ LOGFILE="$HOME"/mybackup.log
 /bin/mkdir -p "$HOME"/samba
 /usr/bin/smbnetfs "$HOME"/samba
 
-/bin/mkdir -p "$HOME"/local
-/usr/bin/rsync -za --delete "$HOME"/samba/phlox.lan/tom/ "$HOME"/local/
+/bin/mkdir -p "$HOME"/local/mainbackup
+/usr/bin/rsync -za --delete "$HOME"/samba/phlox.lan/tom/ "$HOME"/local/mainbackup/
 
 # unmount samba shares
 /bin/fusermount -u "$HOME"/samba
