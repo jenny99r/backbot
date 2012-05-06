@@ -7,7 +7,7 @@ U1DIR="$HOME"/u1
 U1OAUTH=`/bin/cat "$HOME"/u1oauth.key`
 LOGFILE="$HOME"/log/$(date -u +%Y%m%d%H%M%S).log
 
-/bin/echo "Nightly Backup Started: $(date)" >> $LOGFILE
+/bin/echo "Nightly Backup Started: $(date)" >> "$LOGFILE"
 
 # mount samba shares
 /bin/rm -fr "$HOME"/.smb
@@ -30,7 +30,7 @@ if /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync --dry-run "$HOME"/loca
  /bin/echo "Fatal Error -- deleting keyfile"
  exit 1
 fi
-/usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/
-/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR"
+/usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/ > "$LOGFILE" 2>&1
+/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR" > "$LOGFILE" 2>&1
 
 /bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
