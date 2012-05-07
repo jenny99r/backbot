@@ -31,8 +31,8 @@ if /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync --dry-run "$HOME"/loca
  /bin/echo "Fatal Error -- deleting keyfile"
  exit 1
 fi
-/usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/ > "$LOGFILE" 2>&1
-/usr/bin/rsync -zacv --include='*/' --include='*.tc' --exclude='*' "$HOME"/local/ "$U1DIR"/ > "$LOGFILE" 2>&1
-/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR" > "$LOGFILE" 2>&1
+/usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/ >> "$LOGFILE" 2>&1
+/usr/bin/rsync -zacv --include='*/' --include='*.tc' --exclude='*' "$HOME"/local/ "$U1DIR"/ >> "$LOGFILE" 2>&1
+/usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR" >> "$LOGFILE" 2>&1
 
 /bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
