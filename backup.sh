@@ -20,6 +20,7 @@ LOGFILE="$HOME"/log/$(date -u +%Y%m%d%H%M%S).log
 
 /bin/mkdir -p "$HOME"/local/mainbackup
 /usr/bin/rsync -za --delete "$HOME"/samba/phlox.lan/tom/ "$HOME"/local/mainbackup/
+/usr/bin/rsync -zac --include='*/' --include='*.tc' --exclude='*' "$HOME"/samba/phlox.lan/tom/ "$HOME"/local/mainbackup/
 
 # unmount samba shares
 /bin/fusermount -u "$HOME"/samba
@@ -31,6 +32,7 @@ if /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync --dry-run "$HOME"/loca
  exit 1
 fi
 /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync "$HOME"/local/ "$U1DIR"/ > "$LOGFILE" 2>&1
+/usr/bin/rsync -zacv --include='*/' --include='*.tc' --exclude='*' "$HOME"/local/ "$U1DIR"/ > "$LOGFILE" 2>&1
 /usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR" > "$LOGFILE" 2>&1
 
 /bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
