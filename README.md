@@ -1,7 +1,16 @@
 backbot
 =======
+_backup scripts and bits_
 
-backup scripts and bits
+Designed to be run on ubuntu, in a dedicated user account.
+__setup__
+```bash
+git clone https://github.com/scarytom/backbot.git ~/backbot
+~/backbot/setup.sh
+```
+
+How it works
+============
 
 __u1sync setup__
 From a clean install of precise, these are the packages you need:
