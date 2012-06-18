@@ -23,7 +23,8 @@ To obtain and setup u1sync, you'll also need bzr:
 ```bash
 sudo apt-get install bzr
 bzr branch lp:u1sync
-sudo python u1sync/setup.py install
+cd u1sync
+sudo python setup.py install
 ```
 
 Then you'll need an oauth token...
