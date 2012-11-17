@@ -2,6 +2,7 @@
 /plugins/ant*
 /plugins/cvs*
 /plugins/ldap*
+/plugins/javadoc*
 /plugins/pam-auth*
 /plugins/subversion*
 /plugins/ssh-slaves*
