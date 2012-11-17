@@ -9,6 +9,9 @@ WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 cd "$JENKINS_HOME"
 if [ ! -f .git ];
 then
-  echo "Not Git"
+  echo "Not git enabled"
+  exit 1;
 fi
 
+cp "$WRKDIR"/jenkins-gitignore .gitignore
+git status
