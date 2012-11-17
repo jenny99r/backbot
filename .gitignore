@@ -1,0 +1,11 @@
+/war
+/plugins/ant*
+/plugins/cvs*
+/plugins/ldap*
+/plugins/pam-auth*
+/plugins/subversion*
+/plugins/ssh-slaves*
+/plugins/translation*
+/plugins/maven-plugin*
+/plugins/external-monitor-job*
+
