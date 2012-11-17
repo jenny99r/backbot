@@ -1,6 +1,7 @@
 /war
 /identity.key
 /secret.key
+/updates
 /plugins/ant*
 /plugins/cvs*
 /plugins/ldap*
