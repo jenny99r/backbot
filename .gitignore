@@ -8,7 +8,7 @@
 /hudson.tasks.Ant.xml
 /hudson.tasks.Maven.xml
 /updates
-/jobs/*/builds
+/jobs/*/builds/*/log
 /jobs/*/lastStable
 /jobs/*/lastSuccessful
 /plugins/ant*
