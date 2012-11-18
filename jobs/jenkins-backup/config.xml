@@ -13,8 +13,14 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>git clone git://github.com/scarytom/backbot.git
-backbot/jenkins/backup.sh</command>
+      <command>if [ -d backbot ];
+then
+  rm -fr backbot
+fi
+git clone git://github.com/scarytom/backbot.git</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>backbot/jenkins/backup.sh</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
