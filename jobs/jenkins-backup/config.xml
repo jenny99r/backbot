@@ -13,8 +13,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd $JENKINS_HOME
-git status</command>
+      <command>git clone git://github.com/scarytom/backbot.git
+backbot/jenkins/backup.sh</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

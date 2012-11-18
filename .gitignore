@@ -7,6 +7,7 @@
 /hudson.scm.SubversionSCM.xml
 /hudson.tasks.Ant.xml
 /hudson.tasks.Maven.xml
+/workspace
 /updates
 /jobs/*/builds/*/log
 /jobs/*/lastStable
