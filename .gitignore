@@ -1,6 +1,7 @@
 /war
 /identity.key
 /secret.key
+/queue.xml
 /updates
 /plugins/ant*
 /plugins/cvs*
