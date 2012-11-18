@@ -2,6 +2,11 @@
 /identity.key
 /secret.key
 /queue.xml
+hudson.maven.MavenModuleSet.xml
+hudson.scm.CVSSCM.xml
+hudson.scm.SubversionSCM.xml
+hudson.tasks.Ant.xml
+hudson.tasks.Maven.xml
 /updates
 /plugins/ant*
 /plugins/cvs*
