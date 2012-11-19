@@ -15,4 +15,12 @@ fi
 
 SIZE="$( git ls-files -m -o --exclude-standard | while read f; do du -b "$f"; done | awk 'BEGIN {t=0} {t += $1} END {print t}' )"
 
-echo $SIZE
+if (( $SIZE > 10000 ))
+  echo "A dubiously large amount of changes... human intervention recommended"
+  exit 1;
+fi
+
+git add -A .
+git status
+git commit -m "Backup $(date)"
+git push
