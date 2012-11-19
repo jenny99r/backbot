@@ -13,4 +13,6 @@ then
   exit 1;
 fi
 
-git status
+SIZE = "$( git ls-files -m -o --exclude-standard | while read f; do du "$f"; done | awk 'BEGIN {t=0} {t += $1} END {print t}' )"
+
+echo SIZE
