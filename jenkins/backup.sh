@@ -16,6 +16,7 @@ fi
 SIZE="$( git ls-files -m -o --exclude-standard | while read f; do du -b "$f"; done | awk 'BEGIN {t=0} {t += $1} END {print t}' )"
 
 if [ $SIZE -gt 9999 ];
+then
   echo "A dubiously large amount of changes... human intervention recommended"
   exit 1;
 fi
