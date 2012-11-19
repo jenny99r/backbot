@@ -2,6 +2,7 @@
 /identity.key
 /secret.key
 /queue.xml
+/queue.xml.bak
 /hudson.maven.MavenModuleSet.xml
 /hudson.scm.CVSSCM.xml
 /hudson.scm.SubversionSCM.xml
