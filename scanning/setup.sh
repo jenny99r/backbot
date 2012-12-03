@@ -15,9 +15,17 @@ if [ ! -d "$SCANBUTTONDDIR" ]; then
     exit 1
 fi
 
+#ensure the saned user is in the scanner group (can access scanner)
+usermod -G scanner -a saned
+
 cp "$SCRIPTDIR"/initscanner.sh "$SCANBUTTONDDIR"/.
 cp "$SCRIPTDIR"/buttonpressed.sh "$SCANBUTTONDDIR"/.
-cp "$SCRIPTDIR"/scanbuttond.defaults /etc/default/scanbuttond
+
+echo "
+RUN=yes
+RUN_AS_USER=$SUDO_USER
+QUIET_LOG=1" > /etc/default/scanbuttond
+
 echo "SCRIPTDIR=\"$SCRIPTDIR\"" > "$SCANBUTTONDDIR"/env.conf
 
 touch /var/log/scanbuttond.log
