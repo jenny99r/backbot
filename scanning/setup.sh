@@ -15,9 +15,6 @@ if [ ! -d "$SCANBUTTONDDIR" ]; then
     exit 1
 fi
 
-#ensure the saned user is in the scanner group (can access scanner)
-usermod -G scanner -a saned
-
 cp "$SCRIPTDIR"/initscanner.sh "$SCANBUTTONDDIR"/.
 cp "$SCRIPTDIR"/buttonpressed.sh "$SCANBUTTONDDIR"/.
 
