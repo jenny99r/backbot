@@ -20,6 +20,9 @@ cp "$SCRIPTDIR"/buttonpressed.sh "$SCANBUTTONDDIR"/.
 cp "$SCRIPTDIR"/scanbuttond.defaults /etc/default/scanbuttond
 echo "SCRIPTDIR=\"$SCRIPTDIR\"" > "$SCANBUTTONDDIR"/env.conf
 
+touch /var/log/scanbuttond.log
+chmod 666 /var/log/scanbuttond.log
+
 service scanbuttond restart
 
 
