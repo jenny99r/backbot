@@ -9,7 +9,7 @@ TMPDIR=`mktemp -d`
 echo "Scanning Started: $(date)"
 
 cd "$TMPDIR"
-scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 296.994 -x 210.01 --page-width 210.01 --page-height 297.994 --batch --source "ADF Duplex" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
+scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch --source "ADF Duplex" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
 
 if [ ! -f "$TMPDIR/out*.tif" ]; then
   echo "nothing was scanned"
