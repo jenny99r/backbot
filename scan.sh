@@ -23,20 +23,19 @@ then
 fi;
 
 cd "$TMPDIR"
-scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch out%03d.tif --source "$SOURCE" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
+scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch="out%03d.tif" --source "$SOURCE" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
 
-if [ ! -f "$TMPDIR/out1.tif" ]; then
+if [ ! -f "$TMPDIR/out001.tif" ]; then
   echo "nothing was scanned"
 elif [ $SINGLE -eq 0 ]; then
   tiffcp "$TMPDIR"/out*.tif "$OUTFILE"
 elif [ $DUPLEX -eq 0 ]; then
   for file in "$TMPDIR"/out*.tif ; do
     NUM=${file##*out}; NUM=${NUM%.*}
-    if ((expr $NUM % 2)); then
-      continue
+    if (($NUM % 2)); then
+      NUM2=$(expr $NUM + 1); printf -v NUM2 "%03d" $NUM2
+      tiffcp "$TMPDIR/out$NUM.tif" "$TMPDIR/out$NUM2.tif" "${OUTFILE%.*}-$NUM.${OUTFILE##*.}"
     fi
-    NUM2=$(expr $NUM + 1)
-    tiffcp "$TMPDIR/out$NUM.tif" "$TMPDIR/out$NUM2.tif" "${OUTFILE%.*}-$NUM.${OUTFILE##*.}"
   done
 else
   for file in "$TMPDIR"/out*.tif ; do
