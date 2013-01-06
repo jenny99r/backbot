@@ -18,16 +18,12 @@ read() {
   return `cat /sys/devices/virtual/gpio/gpio$1/value`
 }
 
-is_duplex() {
-  if read $DUPLEX;
-  then
-    return "duplex"
-  fi
-  return "simplex"
-}
-
 scan() {
-  "$SCRIPT_DIR"/scan.sh $1 is_duplex
+  MODE="duplex"
+  if read $PORT_DUPLEX; then
+    MODE="simplex"
+  fi
+  "$SCRIPT_DIR"/scan.sh $1 $MODE
 }
 
 while :
@@ -36,16 +32,15 @@ do
     sleep 0.02
   done
 
-  if read $PORT_POWER;
-  then
+  if read $PORT_POWER; then
     echo "powering down"
     exit 0;
-  elif read $PORT_SCAN_SINGLE;
-  then
+  elif read $PORT_SCAN_SINGLE; then
     echo "scanning single"
-  elif read $PORT_SCAN_MULTIPLE;
-  then
+    scan "single"
+  elif read $PORT_SCAN_MULTIPLE; then
     echo "scanning multiple"
+    scan "multiple"
   fi
 done
 

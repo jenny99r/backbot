@@ -23,13 +23,13 @@ fi;
 cd "$TMPDIR"
 scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch --source "$SOURCE" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
 
-if [ ! -f "$TMPDIR/out*.tif" ]; then
+if [ ! -f "$TMPDIR/out1.tif" ]; then
   echo "nothing was scanned"
-elif $SINGLE
+elif [ $SINGLE -eq 0 ]; then
   tiffcp "$TMPDIR"/out*.tif "$OUTFILE"
 else
   for file in "$TMPDIR"/out*.tif ; do
-    mv "$file" "${OUTFILE%.*}-${file#out}"
+    mv "$file" "${OUTFILE%.*}-${file##*out}"
   done
 fi
 
