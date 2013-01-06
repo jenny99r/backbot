@@ -33,13 +33,18 @@ do
   done
 
   if read $PORT_POWER; then
-    echo "powering down"
+    echo "powering down..."
+    gpio-admin unexport $PORT_POWER
+    gpio-admin unexport $PORT_DUPLEX
+    gpio-admin unexport $PORT_SCAN_SINGLE
+    gpio-admin unexport $PORT_SCAN_MULTIPLE
+    sudo shutdown now
     exit 0;
   elif read $PORT_SCAN_SINGLE; then
-    echo "scanning single"
+    echo "scanning single document..."
     scan "single"
   elif read $PORT_SCAN_MULTIPLE; then
-    echo "scanning multiple"
+    echo "scanning multiple documents..."
     scan "multiple"
   fi
 done
