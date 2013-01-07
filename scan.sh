@@ -4,7 +4,7 @@ set -e
 
 SCRIPT_DIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 OUTFILE="$HOME"/scan-$(date -u +%Y%m%d%H%M%S).tif
-TMPDIR=`mktemp -d`
+TMP_DIR=`mktemp -d`
 SINGLE=0
 DUPLEX=0
 SOURCE="ADF Duplex"
@@ -22,27 +22,27 @@ then
   SOURCE="ADF Front"
 fi;
 
-cd "$TMPDIR"
+cd "$TMP_DIR"
 scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch="out%03d.tif" --source "$SOURCE" --resolution 180 --format=tiff --sleeptimer 1 && echo ""
 
-if [ ! -f "$TMPDIR/out001.tif" ]; then
+if [ ! -f "$TMP_DIR/out001.tif" ]; then
   echo "nothing was scanned"
 elif [ $SINGLE -eq 0 ]; then
-  tiffcp "$TMPDIR"/out*.tif "$OUTFILE"
+  tiffcp "$TMP_DIR"/out*.tif "$OUTFILE"
 elif [ $DUPLEX -eq 0 ]; then
-  for file in "$TMPDIR"/out*.tif ; do
+  for file in "$TMP_DIR"/out*.tif ; do
     NUM=${file##*out}; NUM=${NUM%.*}
     if (($NUM % 2)); then
       NUM2=$(expr $NUM + 1); printf -v NUM2 "%03d" $NUM2
-      tiffcp "$TMPDIR/out$NUM.tif" "$TMPDIR/out$NUM2.tif" "${OUTFILE%.*}-$NUM.${OUTFILE##*.}"
+      tiffcp "$TMP_DIR/out$NUM.tif" "$TMP_DIR/out$NUM2.tif" "${OUTFILE%.*}-$NUM.${OUTFILE##*.}"
     fi
   done
 else
-  for file in "$TMPDIR"/out*.tif ; do
+  for file in "$TMP_DIR"/out*.tif ; do
     mv "$file" "${OUTFILE%.*}-${file##*out}"
   done
 fi
 
-rm -fr "$TMPDIR"
+rm -fr "$TMP_DIR"
 
 echo "Scanning Finished: $(date)"
