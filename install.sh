@@ -13,14 +13,10 @@ TMP_DIR=`mktemp -d`
 cd "$TMP_DIR"
 
 # setup windows shares
-apt-get install smbfs
-update-rc.d -f umountnfs.sh remove
-update-rc.d umountnfs.sh stop 15 0 6 .
-apt-get install smbnetfs
-cp /etc/samba/smb.conf ~/.smb/.
-cp /etc/smbnetfs.conf ~/.smb/.
-echo "auth host/share username password" > ~/.smb/smbnetfs.auth
-chmod 600 ~/.smb/*
+apt-get install cifs-utils autofs
+#https://wiki.samba.org/index.php/LinuxCIFS_utils
+#http://rivald.blogspot.co.uk/2012/02/cifs-automount-in-linux.html
+#http://www.greenfly.org/tips/autofs.html
 
 # Quick2Wire gpio admin
 if [ ! -f /usr/local/bin/gpio-admin ]; then
