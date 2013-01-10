@@ -14,9 +14,10 @@ cd "$TMP_DIR"
 
 # setup windows shares
 apt-get install cifs-utils autofs
-#https://wiki.samba.org/index.php/LinuxCIFS_utils
-#http://rivald.blogspot.co.uk/2012/02/cifs-automount-in-linux.html
-#http://www.greenfly.org/tips/autofs.html
+echo '/mnt/scans /etc/auto.scans --timeout 120' >> /etc/auto.master
+echo '* -fstype=cifs,user=scan,pass=scan,rw ://phlox/scans' > /etc/auto.scans
+chmod +x /etc/auto.scans
+service autofs restart
 
 # Quick2Wire gpio admin
 if [ ! -f /usr/local/bin/gpio-admin ]; then
