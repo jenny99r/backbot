@@ -14,9 +14,9 @@ cd "$TMP_DIR"
 
 # setup windows shares
 apt-get install cifs-utils autofs
-echo '/mnt/scans /etc/auto.scans --timeout 120' >> /etc/auto.master
-echo '* -fstype=cifs,user=scan,pass=scan,rw ://phlox/scans' > /etc/auto.scans
-chmod +x /etc/auto.scans
+echo '/mnt/nas /etc/auto.nas --timeout 120' >> /etc/auto.master
+echo 'scans -fstype=cifs,username=scan,password=scan,rw ://phlox/scans' > /etc/auto.nas
+chmod 644 /etc/auto.scans
 service autofs restart
 
 # Quick2Wire gpio admin
