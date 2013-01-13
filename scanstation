@@ -12,10 +12,10 @@
 # Author: Foo Bar <t.denley@cantab.net>
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/home/pi/backbot-rpi-scanstation:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 DESC="startup the scanstation service"
 NAME=scanstation
-DAEMON=/home/pi/backbot-rpi-scanstation/controller.sh
+DAEMON=controller.sh
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
