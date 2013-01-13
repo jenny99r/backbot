@@ -13,11 +13,13 @@ TMP_DIR=`mktemp -d`
 cd "$TMP_DIR"
 
 # setup windows shares
-apt-get install cifs-utils autofs
-echo '/mnt/nas /etc/auto.nas --timeout 120' >> /etc/auto.master
-echo 'scans -fstype=cifs,username=scan,password=scan,rw ://phlox/scans' > /etc/auto.nas
-chmod 644 /etc/auto.scans
-service autofs restart
+if [ ! -f /etc/auto.nas ]; then
+  apt-get install cifs-utils autofs
+  echo '/mnt/nas /etc/auto.nas --timeout 120' >> /etc/auto.master
+  echo 'scans -fstype=cifs,username=scan,password=scan,rw ://phlox/scans' > /etc/auto.nas
+  chmod 644 /etc/auto.nas
+  service autofs restart
+fi
 
 # Quick2Wire gpio admin
 if [ ! -f /usr/local/bin/gpio-admin ]; then
@@ -31,5 +33,15 @@ if [ ! -f /usr/local/bin/gpio-admin ]; then
 fi
 
 # setup scanner
-apt-get install sane-utils libtiff-tools
-adduser $USER scanner
+if [ ! `cat /etc/group | grep pi | grep scanner` ]; then
+  apt-get install sane-utils libtiff-tools
+  adduser $USER scanner
+fi
+
+# setup statrup script
+if [ ! -f /etc/init.d/scanstation ]; then
+  mv "$SCRIPT_DIR"/scanstation /etc/init.d/.
+  chown root:root /etc/init.d/scanstation
+  update-rc.d scanstation defaults
+fi
+
