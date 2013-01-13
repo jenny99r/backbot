@@ -26,26 +26,31 @@ scan() {
   "$SCRIPT_DIR"/scan.sh $1 $MODE
 }
 
-while :
-do
-  while ! ( read $PORT_SCAN_SINGLE || read $PORT_SCAN_MULTIPLE || read $PORT_POWER ); do
-    sleep 0.02
-  done
+controlloop() {
+  while :
+  do
+    while ! ( read $PORT_SCAN_SINGLE || read $PORT_SCAN_MULTIPLE || read $PORT_POWER );
+    do
+      sleep 0.02
+    done
 
-  if read $PORT_POWER; then
-    echo "powering down..."
-    gpio-admin unexport $PORT_POWER
-    gpio-admin unexport $PORT_DUPLEX
-    gpio-admin unexport $PORT_SCAN_SINGLE
-    gpio-admin unexport $PORT_SCAN_MULTIPLE
-    sudo shutdown now
-    exit 0;
-  elif read $PORT_SCAN_SINGLE; then
-    echo "scanning single document..."
-    scan "single"
-  elif read $PORT_SCAN_MULTIPLE; then
-    echo "scanning multiple documents..."
-    scan "multiple"
-  fi
-done
+    if read $PORT_POWER; then
+      echo "powering down..."
+      gpio-admin unexport $PORT_POWER
+      gpio-admin unexport $PORT_DUPLEX
+      gpio-admin unexport $PORT_SCAN_SINGLE
+      gpio-admin unexport $PORT_SCAN_MULTIPLE
+      sudo shutdown now
+      exit 0;
+    elif read $PORT_SCAN_SINGLE; then
+      echo "scanning single document..."
+      scan "single"
+    elif read $PORT_SCAN_MULTIPLE; then
+      echo "scanning multiple documents..."
+      scan "multiple"
+    fi
+  done
+}
+
+controlloop &
 
