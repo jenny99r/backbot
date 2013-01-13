@@ -32,7 +32,7 @@ scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 
 
 if [ ! -f "$TMP_DIR/out001.tif" ]; then
   echo "nothing was scanned"
-  return 0
+  exit 0
 elif [ $SINGLE -eq 0 ]; then
   tiffcp "$TMP_DIR"/out*.tif "$OUT_FILE"
 elif [ $DUPLEX -eq 0 ]; then
