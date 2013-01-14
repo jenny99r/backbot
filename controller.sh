@@ -2,6 +2,9 @@
 set -u
 set -e
 
+exec >  >(tee -a /var/log/scanstation.log)
+exec 2> >(tee -a /var/log/scanstation.log >&2)
+
 SCRIPT_DIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 GPIO_DIR="/sys/devices/virtual/gpio"
 PORT_POWER=14

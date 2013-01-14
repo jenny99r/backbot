@@ -19,6 +19,7 @@ DAEMON=/home/pi/backbot-rpi-scanstation/controller.sh
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+LOGFILE=/var/log/scanstation.log
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -39,6 +40,9 @@ SCRIPTNAME=/etc/init.d/$NAME
 #
 do_start()
 {
+  touch $LOGFILE
+  chown pi:pi $LOGFILE
+
 	# Return
 	#   0 if daemon has been started
 	#   1 if daemon was already running
