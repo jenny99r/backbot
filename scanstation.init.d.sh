@@ -44,11 +44,12 @@ do_start()
 	#   1 if daemon was already running
 	#   2 if daemon could not be started
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \
-                --user pi --group pi --chuid pi:pi --test > /dev/null \
+                    --background --make-pidfile --user pi --group pi \
+                    --chuid pi:pi --test > /dev/null \
 		|| return 1
 	start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON \
-                --user pi --group pi --chuid pi:pi -- \
-		$DAEMON_ARGS \
+                    --background --make-pidfile --user pi --group pi \
+                    --chuid pi:pi -- $DAEMON_ARGS \
 		|| return 2
 }
 

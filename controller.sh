@@ -1,21 +1,29 @@
 #!/bin/bash
 set -u
 set -e
+trap : SIGTERM SIGINT
 
 SCRIPT_DIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
-
+GPIO_DIR="/sys/devices/virtual/gpio"
 PORT_POWER=14
 PORT_DUPLEX=4
 PORT_SCAN_SINGLE=0
 PORT_SCAN_MULTIPLE=1
 
-gpio-admin export $PORT_POWER
-gpio-admin export $PORT_DUPLEX
-gpio-admin export $PORT_SCAN_SINGLE
-gpio-admin export $PORT_SCAN_MULTIPLE
+register() {
+  if [ ! -f "$GPIO_DIR/gpio$1/value" ]; then
+    gpio-admin export "$1"
+  fi
+}
 
-read() {
-  return `cat /sys/devices/virtual/gpio/gpio$1/value`
+deregister() {
+  if [ -f "$GPIO_DIR/gpio$1/value" ]; then
+    gpio-admin unexport "$1"
+  fi
+}
+
+gpio() {
+  return `cat "$GPIO_DIR/gpio$1/value"`
 }
 
 scan() {
@@ -26,22 +34,22 @@ scan() {
   "$SCRIPT_DIR"/scan.sh $1 $MODE
 }
 
+register $PORT_POWER
+register $PORT_DUPLEX
+register $PORT_SCAN_SINGLE
+register $PORT_SCAN_MULTIPLE
+
 controlloop() {
   while :
   do
-    while ! ( read $PORT_SCAN_SINGLE || read $PORT_SCAN_MULTIPLE || read $PORT_POWER );
+    while ! ( gpio $PORT_SCAN_SINGLE || gpio $PORT_SCAN_MULTIPLE || gpio $PORT_POWER );
     do
       sleep 0.02
     done
 
     if read $PORT_POWER; then
       echo "powering down..."
-      gpio-admin unexport $PORT_POWER
-      gpio-admin unexport $PORT_DUPLEX
-      gpio-admin unexport $PORT_SCAN_SINGLE
-      gpio-admin unexport $PORT_SCAN_MULTIPLE
       sudo shutdown now
-      exit 0;
     elif read $PORT_SCAN_SINGLE; then
       echo "scanning single document..."
       scan "single"
@@ -53,4 +61,14 @@ controlloop() {
 }
 
 controlloop &
+LOOP_PID=$!
+
+wait $LOOP_PID
+
+# sigterm will get us here
+kill $LOOP_PID
+derigister $PORT_POWER
+derigister $PORT_DUPLEX
+derigister $PORT_SCAN_SINGLE
+derigister $PORT_SCAN_MULTIPLE
 

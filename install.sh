@@ -40,7 +40,7 @@ fi
 
 # setup statrup script
 if [ ! -f /etc/init.d/scanstation ]; then
-  mv "$SCRIPT_DIR"/scanstation /etc/init.d/.
+  mv "$SCRIPT_DIR"/scanstation.init.d.sh /etc/init.d/scanstation
   chown root:root /etc/init.d/scanstation
   update-rc.d scanstation defaults
 fi
