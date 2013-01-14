@@ -10,13 +10,13 @@ PORT_SCAN_SINGLE=0
 PORT_SCAN_MULTIPLE=1
 
 register() {
-  if [ ! -f "$GPIO_DIR/gpio$1/value" ]; then
+  if [ ! -d "$GPIO_DIR/gpio$1" ]; then
     gpio-admin export "$1"
   fi
 }
 
 deregister() {
-  if [ -f "$GPIO_DIR/gpio$1/value" ]; then
+  if [ -d "$GPIO_DIR/gpio$1" ]; then
     gpio-admin unexport "$1"
   fi
 }
