@@ -12,10 +12,10 @@
 # Author: Foo Bar <t.denley@cantab.net>
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
-PATH=/home/pi/backbot-rpi-scanstation:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 DESC="startup the scanstation service"
 NAME=scanstation
-DAEMON=controller.sh
+DAEMON=/home/pi/backbot-rpi-scanstation/controller.sh
 DAEMON_ARGS=""
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
@@ -63,7 +63,7 @@ do_stop()
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
-	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE
 	RETVAL="$?"
 	[ "$RETVAL" = 2 ] && return 2
 	start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON

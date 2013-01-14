@@ -1,7 +1,6 @@
 #!/bin/bash
 set -u
 set -e
-trap : SIGTERM SIGINT
 
 SCRIPT_DIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 GPIO_DIR="/sys/devices/virtual/gpio"
@@ -34,6 +33,16 @@ scan() {
   "$SCRIPT_DIR"/scan.sh $1 $MODE
 }
 
+teardown() {
+  kill $LOOP_PID
+  deregister $PORT_POWER
+  deregister $PORT_DUPLEX
+  deregister $PORT_SCAN_SINGLE
+  deregister $PORT_SCAN_MULTIPLE
+}
+
+trap teardown SIGTERM SIGINT
+
 register $PORT_POWER
 register $PORT_DUPLEX
 register $PORT_SCAN_SINGLE
@@ -64,11 +73,4 @@ controlloop &
 LOOP_PID=$!
 
 wait $LOOP_PID
-
-# sigterm will get us here
-kill $LOOP_PID
-derigister $PORT_POWER
-derigister $PORT_DUPLEX
-derigister $PORT_SCAN_SINGLE
-derigister $PORT_SCAN_MULTIPLE
-
+teardown
