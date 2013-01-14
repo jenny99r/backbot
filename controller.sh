@@ -27,7 +27,7 @@ gpio() {
 
 scan() {
   MODE="duplex"
-  if read $PORT_DUPLEX; then
+  if gpio $PORT_DUPLEX; then
     MODE="simplex"
   fi
   "$SCRIPT_DIR"/scan.sh $1 $MODE
@@ -56,13 +56,13 @@ controlloop() {
       sleep 0.02
     done
 
-    if read $PORT_POWER; then
+    if gpio $PORT_POWER; then
       echo "powering down..."
       sudo shutdown now
-    elif read $PORT_SCAN_SINGLE; then
+    elif gpio $PORT_SCAN_SINGLE; then
       echo "scanning single document..."
       scan "single"
-    elif read $PORT_SCAN_MULTIPLE; then
+    elif gpio $PORT_SCAN_MULTIPLE; then
       echo "scanning multiple documents..."
       scan "multiple"
     fi
