@@ -33,6 +33,7 @@ scan() {
   if gpio $PORT_DUPLEX; then
     MODE="simplex"
   fi
+  echo "scanning $MODE"
   "$SCRIPT_DIR"/scan.sh $1 $MODE
 }
 
