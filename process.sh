@@ -3,7 +3,7 @@ set -u
 set -e
 
 STARTDIR="$( /bin/pwd )"
-WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
+SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 TMPDIR=`mktemp -d`
 SAMBADIR="$TMPDIR"/samba
 
