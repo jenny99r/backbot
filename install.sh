@@ -8,17 +8,15 @@ cd "$SCRIPTTDIR"
 ORIGIN=`git config --get remote.origin.url`
 
 cd $HOME
-if [ ! -f jenkins.war ];
-then
+if [ ! -f jenkins.war ]; then
   echo "Downloading Jenkins..."
   wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
 fi
 
-if [ ! -f .jenkins ];
-then
+export JENKINS_HOME=$HOME/jenkins
+if [ ! -d $JENKINS_HOME ]; then
   echo "Restoring Jenkins configuration"
-  git clone $ORIGIN -b jenkins-backup jenkins
+  git clone $ORIGIN -b jenkins-backup $JENKINS_HOME
 fi
 
-java -jar jenkins.war -DJENKINS_HOME=$HOME/jenkins &
-
+java -jar jenkins.war &
