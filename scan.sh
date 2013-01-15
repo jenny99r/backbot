@@ -10,10 +10,6 @@ SINGLE=0
 DUPLEX=0
 SOURCE="ADF Duplex"
 
-if [ ! -d "$OUT_DIR" ]; then
-  mkdir -p "$OUT_DIR"
-fi
-
 echo "Scanning Started: $(date)"
 
 if [ $1 = "multiple" ];
@@ -33,7 +29,13 @@ scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 
 if [ ! -f "$TMP_DIR/out001.tif" ]; then
   echo "nothing was scanned"
   exit 0
-elif [ $SINGLE -eq 0 ]; then
+fi
+
+if [ ! -d "$OUT_DIR" ]; then
+  mkdir -p "$OUT_DIR"
+fi
+
+if [ $SINGLE -eq 0 ]; then
   tiffcp "$TMP_DIR"/out*.tif "$OUT_FILE"
 elif [ $DUPLEX -eq 0 ]; then
   for file in "$TMP_DIR"/out*.tif ; do
