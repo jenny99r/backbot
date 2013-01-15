@@ -5,18 +5,26 @@ set -e
 STARTDIR="$( /bin/pwd )"
 WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 TMPDIR=`mktemp -d`
+SAMBADIR="$TMPDIR"/samba
+
+# mount samba shares
+/bin/rm -fr "$HOME"/.smb
+/bin/cp -R "$SCRIPTDIR"/smb-conf "$HOME"/.smb
+/bin/echo "auth phlox.lan scan scan" > "$HOME"/.smb/smbnetfs.auth
+/bin/chmod 600 "$HOME"/.smb/*
+
+/bin/mkdir -p $SAMBADIR
+/usr/bin/smbnetfs $SAMBADIR
 
 /bin/echo "Scanning Started: $(date)"
 
-cd "$TMPDIR"
-scanimage --mode "Color" --device-name "fujitsu:ScanSnap S1500:94374" -y 297 -x 210 --page-width 210 --page-height 297 --batch --source "ADF Duplex" --resolution 180 --format=tiff
+ls -R "$SAMBADIR"
 
-tiffcp "out*.tif" "combined.tif"
+/bin/fusermount -u $SAMBADIR
+/bin/rm -fr $SAMBADIR
 
-convert "combined.tif" -compress "JPEG" -quality 60 "final.pdf"
-
-tesseract "combined.tif" "final"
-
-cp "final.pdf" "$STARTDIR"/.
-cp "final.txt" "$STARTDIR"/.
+#convert "combined.tif" -compress "JPEG" -quality 60 "final.pdf"
+#tesseract "combined.tif" "final"
+#cp "final.pdf" "$STARTDIR"/.
+#cp "final.txt" "$STARTDIR"/.
 
