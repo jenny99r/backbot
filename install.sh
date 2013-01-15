@@ -4,7 +4,7 @@ set -e
 
 SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 
-cd "$SCRIPTTDIR"
+cd "$SCRIPTDIR"
 ORIGIN=`git config --get remote.origin.url`
 
 cd $HOME
