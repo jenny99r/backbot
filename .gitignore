@@ -1,6 +1,6 @@
 /war
 /identity.key
-/secret.key
+/secret.key*
 /queue.xml
 /queue.xml.bak
 /hudson.maven.MavenModuleSet.xml
