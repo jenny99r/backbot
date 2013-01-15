@@ -50,6 +50,7 @@ register $PORT_POWER
 register $PORT_DUPLEX
 register $PORT_SCAN_SINGLE
 register $PORT_SCAN_MULTIPLE
+sleep 0.5
 
 controlloop() {
   while :
