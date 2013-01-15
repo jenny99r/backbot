@@ -6,6 +6,8 @@ STARTDIR="$( /bin/pwd )"
 SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 TMPDIR=`mktemp -d`
 SAMBADIR="$TMPDIR"/samba
+READYDIR="$SAMBADIR"/phlox.lan/scans/ready
+DONEDIR="$SAMBADIR"/phlox.lan/scans/done
 
 # mount samba shares
 /bin/rm -fr "$HOME"/.smb
@@ -18,7 +20,7 @@ SAMBADIR="$TMPDIR"/samba
 
 /bin/echo "Scanning Started: $(date)"
 
-ls -R "$SAMBADIR"
+ls -R "$READYDIR"
 
 /bin/fusermount -u $SAMBADIR
 /bin/rm -fr $SAMBADIR
