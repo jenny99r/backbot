@@ -2,18 +2,17 @@
 set -u
 set -e
 
-BACKBOTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && cd .. && /bin/pwd )"
+SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 
-cd "$BACKBOTDIR"
+cd "$SCRIPTTDIR"
 ORIGIN=`git config --get remote.origin.url`
 
 cd $HOME
 if [ ! -f jenkins.war ];
 then
-  echo "Downloading Jenkins"
+  echo "Downloading Jenkins..."
   wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
 fi
-
 
 if [ ! -f .jenkins ];
 then
@@ -21,4 +20,5 @@ then
   git clone $ORIGIN -b jenkins-backup jenkins
 fi
 
-java -jar jenkins.war -DJENKINS_HOME=$HOME/jenkins
+java -jar jenkins.war -DJENKINS_HOME=$HOME/jenkins &
+
