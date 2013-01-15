@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>check that the backups actually ran</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector">
+    <hudson.triggers.TimerTrigger>
+      <spec>#8am daily
+0 8 * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>set -e ; set -u
+
+check() {
+  JSON=`curl http://tom-server:8080/job/$1/lastBuild/api/json`
+  TIMESTAMP=${JSON##*timestamp\&quot;:}; TIMESTAMP=${TIMESTAMP%%,*}; TIMESTAMP=$(($TIMESTAMP / 1000))
+  NOW=`date +%s`
+
+  echo $(($NOW - $TIMESTAMP))
+  if [ $(($NOW - $TIMESTAMP)) -gt 86400 ]; then
+    echo &quot;check on $1 failed&quot;
+    exit 1
+  fi
+}
+
+check &quot;jenkins-backup&quot;
+check &quot;primary-backup&quot;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.4">
+      <recipients>t.denley@gmail.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers/>
+</project>
