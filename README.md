@@ -1,76 +1,44 @@
-backbot
-=======
-_backup scripts and bits_
+backbot document scanning
+=========================
+_scanning scripts and bits_
 
 Designed to be run on ubuntu, in a dedicated user account.
+
+__prerequisites__
+```bash
+sudo apt-get install tesseract-ocr sane-utils imagemagick libtiff-tools
+wget http://ftp.uk.debian.org/debian/pool/main/s/scanbuttond/scanbuttond_0.2.3.cvs20090713-11_amd64.deb
+```
 
 __setup__
 ```bash
 git clone https://github.com/scarytom/backbot.git ~/backbot
-~/backbot/setup.sh
+~/backbot/scanning/setup.sh
 ```
 
 How it works
 ============
 
-__u1sync setup__
-From a clean install of precise, these are the packages you need:
-  * python-gobject
-  * python-ubuntuone-storageprotocol
-  * python-ubuntuone-client
-  * python-ubuntu-sso-client
+__Stage 1 - Scanning__
+* scanbuttond responds to button press on scanner triggering scan
+* uses `scanimage` to scan all docs in duplex to tif files
+* uses `tiffcp` to combine the tifs into a single file
+* uploads the combined tif to a network drive
 
-To obtain and setup u1sync, you'll also need bzr:
-```bash
-sudo apt-get install bzr
-bzr branch lp:u1sync
-cd u1sync
-sudo python setup.py install
-```
+__Stage 2 - Processing__
+* Jenkins job reads scans directory on network drive
+* Detects new tiff files
+* uses `convert` to turn tif into pdf with 60% JPEG compression
+* uses `tesseract` to OCR the tif to a txt file
+* removes tif
 
-Then you'll need an oauth token...
-```bash
-wget --user=me@mine.com -O token-details --ask-password "https://login.ubuntu.com/api/1.0/authentications?ws.op=authenticate&token_name=Ubuntu%20One%20@%20$(hostname)"
-wget -O token-approval "https://one.ubuntu.com/oauth/sso-finished-so-get-tokens/me%40mine.com"
-```
+__Stage 3 - Backup__
+* Encryption?
 
-or use this script: http://people.canonical.com/~roman.yepishev/us/ubuntuone-sso-login.py
+References
+==========
 
-references:
- * https://bugs.launchpad.net/u1sync/+bug/910207
- * http://per.liedman.net/2011/01/22/using-ubuntu-one-for-backup-on-a-headless-server/
- * http://per.liedman.net/2011/12/28/using-ubuntu-one-from-a-headless-oneiric-ocelot/
-
-__u1sync usage__
-```bash
-mkdir u1/
-u1sync --oauth=`cat u1oauth.key` --init u1/
-u1sync --oauth=`cat u1oauth.key` --diff u1/
-u1sync --oauth=`cat u1oauth.key` --dry-run --action=upload u1
-```
-__crontab__
-```bash
-crontab -e
-01 04 * * * /home/tom/backbot/backup.sh
-```
-
-__mounting windows share__
-```bash
-sudo apt-get install smbfs
-sudo update-rc.d -f umountnfs.sh remove
-sudo update-rc.d umountnfs.sh stop 15 0 6 .
-sudo apt-get install smbnetfs
-
-cp /etc/samba/smb.conf ~/.smb/.
-cp /etc/smbnetfs.conf ~/.smb/.
-echo "auth host/share username password" > ~/.smb/smbnetfs.auth
-chmod 600 ~/.smb/*
-
-mkdir ~/samba-shares
-smbnetfs ~/samba-shares
-ls ~/samba-shares/host/share
-fusermount -u ~/samba-shares
-```
-references:
- * https://help.ubuntu.com/community/MountWindowsSharesPermanently
- * http://manpages.ubuntu.com/manpages/hardy/man1/smbnetfs.1.html
+ * http://www.robinclarke.net/archives/the-paperless-office-with-linux
+ * http://jduck.net/2008/01/05/ocr-scanning/
+ * http://en.gentoo-wiki.com/wiki/Scanner_buttons_and_one-touch_scanning
+ * http://packages.debian.org/experimental/amd64/scanbuttond/download
