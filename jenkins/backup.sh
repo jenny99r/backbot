@@ -2,8 +2,6 @@
 set -u
 set -e
 
-WRKDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
-
 /bin/echo "Jenkins Backup Started: $(date)"
 
 cd "$JENKINS_HOME"
@@ -25,3 +23,5 @@ git add -A .
 git status
 git commit -m "Backup $(date)"
 git push
+
+/bin/echo "Jenkins Backup Finished: $(date)"
