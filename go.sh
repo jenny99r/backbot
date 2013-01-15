@@ -18,10 +18,10 @@ DONEDIR="$SAMBADIR"/phlox.lan/scans/done
 /bin/mkdir -p $SAMBADIR
 /usr/bin/smbnetfs $SAMBADIR
 
-/bin/echo "Scanning Started: $(date)"
+find "$READYDIR" -mindepth 1 -maxdepth 1 -type d \
+     -exec "$SCRIPTDIR/process.sh" '{}' $DONEDIR \;
 
-ls -R "$READYDIR"
-
+sleep 15
 /bin/fusermount -u $SAMBADIR
 /bin/rm -fr $SAMBADIR
 
