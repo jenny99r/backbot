@@ -10,6 +10,7 @@
 /hudson.tasks.Maven.xml
 /workspace
 /updates
+/secrets
 /jobs/*/builds/*/log
 /jobs/*/lastStable
 /jobs/*/lastSuccessful
@@ -17,6 +18,7 @@
 /plugins/cvs*
 /plugins/ldap*
 /plugins/javadoc*
+/plugins/mailer*
 /plugins/pam-auth*
 /plugins/subversion*
 /plugins/ssh-slaves*
