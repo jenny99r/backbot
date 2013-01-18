@@ -2,8 +2,6 @@
 set -u
 set -e
 
-STARTDIR="$( /bin/pwd )"
-SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 TMPDIR=`mktemp -d`
 SCANSDIR="$1"
 DONEDIR="$2"
