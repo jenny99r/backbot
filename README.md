@@ -10,8 +10,18 @@ git clone https://github.com/scarytom/backbot.git ~/backbot
 ~/backbot/setup.sh
 ```
 
+
+
 How it works
 ============
+
+All managed and scheduled by a dedicated Jenkins instance.
+
+Installed Packages:
+
+```bash
+  sudo apt-get install postfix
+```
 
 __u1sync setup__
 From a clean install of precise, these are the packages you need:
