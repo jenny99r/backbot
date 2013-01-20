@@ -10,6 +10,7 @@ SAMBADIR="$HOME"/samba
 LOCALDIR="$HOME"/local
 
 /bin/echo "Nightly Backup Started: $(date)" >> "$LOGFILE"
+/bin/echo "Nightly backup started: $(date)"
 
 $SCRIPTDIR/samba/mount.sh
 
@@ -23,6 +24,7 @@ $SCRIPTDIR/samba/mount.sh
 $SCRIPTDIR/samba/unmount.sh
 
 #sync the remote backup directory and push it
+/bin/echo "Starting remote synchronisation: $(date)"
 if /usr/bin/rsync -zav --delete --exclude=.ubuntuone-sync --dry-run "$LOCALDIR"/ "$U1DIR"/ | /bin/grep -q '^deleting .*backup.keyfile$'; then
   /bin/echo "Fatal Error -- deleting keyfile"
   exit 1
@@ -31,4 +33,5 @@ fi
 /usr/bin/rsync -zacv --include='*/' --include='*.tc' --exclude='*' "$LOCALDIR"/ "$U1DIR"/ >> "$LOGFILE" 2>&1
 /usr/local/bin/u1sync --oauth="$U1OAUTH" --action=clobber-server "$U1DIR" >> "$LOGFILE" 2>&1
 
+/bin/echo "nightly backup successful: $(date)"
 /bin/echo "Nightly Backup Successful: $(date)" >> "$LOGFILE"
