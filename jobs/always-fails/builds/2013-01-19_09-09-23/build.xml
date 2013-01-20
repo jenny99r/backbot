@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causes>
+        <hudson.model.Cause_-UserIdCause/>
+      </causes>
+    </hudson.model.CauseAction>
+    <hudson.tasks.MailMessageIdAction plugin="mailer@1.4">
+      <messageId>&lt;1622477150.4.1358586563188.JavaMail.tom@tom-server&gt;</messageId>
+    </hudson.tasks.MailMessageIdAction>
+  </actions>
+  <number>3</number>
+  <startTime>1358586563061</startTime>
+  <result>FAILURE</result>
+  <duration>386</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>/home/tom/jenkins/workspace/always-fails</workspace>
+  <hudsonVersion>1.499</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>
