@@ -39,7 +39,7 @@ if [ $SINGLE -eq 0 ]; then
   tiffcp "$TMP_DIR"/out*.tif "$OUT_FILE"
 elif [ $DUPLEX -eq 0 ]; then
   for file in "$TMP_DIR"/out*.tif ; do
-    NUM=${file##*out}; NUM=${NUM%.*}
+    NUM=${file##*out}; NUM=${NUM%.*}; NUM=`echo $NUM|sed 's/^0*//'`
     if (($NUM % 2)); then
       NUM2=$(expr $NUM + 1); printf -v NUM2 "%03d" $NUM2
       tiffcp "$TMP_DIR/out$NUM.tif" "$TMP_DIR/out$NUM2.tif" "${OUT_FILE%.*}-$NUM.${OUT_FILE##*.}"
