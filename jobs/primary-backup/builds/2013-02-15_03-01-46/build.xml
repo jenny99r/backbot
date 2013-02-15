@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causes>
+        <hudson.triggers.TimerTrigger_-TimerTriggerCause/>
+      </causes>
+    </hudson.model.CauseAction>
+    <hudson.tasks.MailMessageIdAction plugin="mailer@1.4">
+      <messageId>&lt;1659266237.0.1360897351730.JavaMail.tom@tom-server&gt;</messageId>
+    </hudson.tasks.MailMessageIdAction>
+  </actions>
+  <number>32</number>
+  <startTime>1360897306064</startTime>
+  <result>FAILURE</result>
+  <duration>46454</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>/home/tom/jenkins/workspace/primary-backup</workspace>
+  <hudsonVersion>1.499</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>
