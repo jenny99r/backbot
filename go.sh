@@ -2,6 +2,13 @@
 set -u
 set -e
 
+while getopts 'p' OPTION
+do
+  case $OPTION in
+    p) PROCESS_OPT=' -p '
+  esac
+don
+
 STARTDIR="$( /bin/pwd )"
 SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
 TMPDIR=`mktemp -d`
@@ -19,7 +26,7 @@ DONEDIR="$SAMBADIR"/phlox.lan/scans/done
 /usr/bin/smbnetfs $SAMBADIR
 
 find "$READYDIR" -mindepth 1 -maxdepth 1 -type d \
-     -exec "$SCRIPTDIR/process.sh" '{}' $DONEDIR \;
+     -exec "$SCRIPTDIR/process.sh$PROCESS_OPT" '{}' $DONEDIR \;
 
 sleep 15
 /bin/fusermount -u $SAMBADIR
