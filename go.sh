@@ -2,6 +2,7 @@
 set -u
 set -e
 
+PROCESS_OPT=''
 while getopts 'p' OPTION
 do
   case $OPTION in
