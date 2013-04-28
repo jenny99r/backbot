@@ -6,7 +6,7 @@ PROCESS_OPT=''
 while getopts 'p' OPTION
 do
   case $OPTION in
-    p) PROCESS_OPT=' -p '
+    p) PROCESS_OPT=' -p'
   esac
 done
 
@@ -27,7 +27,7 @@ DONEDIR="$SAMBADIR"/phlox.lan/scans/done
 /usr/bin/smbnetfs $SAMBADIR
 
 find "$READYDIR" -mindepth 1 -maxdepth 1 -type d \
-     -exec "$SCRIPTDIR/process.sh$PROCESS_OPT" '{}' $DONEDIR \;
+     -exec "$SCRIPTDIR/process.sh"$PROCESS_OPT '{}' $DONEDIR \;
 
 sleep 15
 /bin/fusermount -u $SAMBADIR
