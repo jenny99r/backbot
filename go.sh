@@ -7,7 +7,7 @@ do
   case $OPTION in
     p) PROCESS_OPT=' -p '
   esac
-don
+done
 
 STARTDIR="$( /bin/pwd )"
 SCRIPTDIR="$( cd "$( /usr/bin/dirname "${BASH_SOURCE[0]}" )" && /bin/pwd )"
