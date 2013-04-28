@@ -11,9 +11,10 @@
 /workspace
 /updates
 /secrets
-/jobs/*/builds/*/log
 /jobs/*/lastStable
 /jobs/*/lastSuccessful
+/jobs/*/builds/*/log
+/jobs/*/builds/last*Build
 /plugins/ant*
 /plugins/cvs*
 /plugins/ldap*
@@ -24,5 +25,7 @@
 /plugins/ssh-slaves*
 /plugins/translation*
 /plugins/maven-plugin*
+/plugins/credentials*
+/plugins/ssh-credentials*
 /plugins/external-monitor-job*
 
