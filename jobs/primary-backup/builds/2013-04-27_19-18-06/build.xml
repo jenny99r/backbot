@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causes>
+        <hudson.model.Cause_-UserIdCause/>
+      </causes>
+    </hudson.model.CauseAction>
+    <hudson.tasks.MailMessageIdAction plugin="mailer@1.4">
+      <messageId>&lt;209743937.0.1367087257040.JavaMail.tom@tom-server&gt;</messageId>
+    </hudson.tasks.MailMessageIdAction>
+  </actions>
+  <number>105</number>
+  <startTime>1367086686467</startTime>
+  <result>SUCCESS</result>
+  <duration>571446</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>/home/tom/jenkins/workspace/primary-backup</workspace>
+  <hudsonVersion>1.499</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>
